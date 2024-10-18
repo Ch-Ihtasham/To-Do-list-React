@@ -4,6 +4,8 @@ import { useState } from 'react'
 function App() {
   const [tasks, setTasks] = useState([]); // Array to store tasks
   const [newTask, setNewTask] = useState(''); // Store new task input
+  const [isEditing, setIsEditing] = useState(null)
+  const [editedText, setEditedText] = useState('')
   const handleChange = (e) => {
     setNewTask(e.target.value)
   }
@@ -20,15 +22,27 @@ function App() {
     setTasks(updateTasks)
 
   }
+  function handleEdit(index) {
+    setIsEditing(index)
+    setEditedText(tasks[index].text)
+  }
+  function handelEditSave(index) {
+    const updatedEditTask = tasks.map((task, i) =>
+      i === index ? { ...task, text: editedText } : task
+
+    )
+    setTasks(updatedEditTask)
+    setIsEditing(null);
+  }
 
   return (
-    <div>
+    <div className='w-3/4 m-auto my-3'>
       <div>
         <input type="text" onChange={handleChange} value={newTask} className='border-2 border-black' />
         <button onClick={handleAdd} className='' >Add</button>
       </div>
       <div>
-        <h2 className=''>your task</h2>
+        <h2 className='text-3xl font-bold'>your task</h2>
         {tasks.map((task, index) => (
           <div key={index}>
             <div className='flex justify-evenly w-80'>
@@ -37,9 +51,23 @@ function App() {
                 onChange={() => handelDone(index)}
 
               />
-              <div className={task.isDone ? 'line-through' : ''} >{task.text}</div>
+              {isEditing === index ?
+                (
+                  <div>
+                    <input type="text" onChange={(e) => setEditedText(e.target.value)} value={editedText} className='border-2 border-black' />
+                  </div>
+                ) :
+                (<div className={task.isDone ? 'line-through' : ''} >{task.text}</div>)}
+
               <div className='flex gap-4'>
-                <button>edit</button>
+                {isEditing === index ?
+                  (
+                    <div onClick={() => handelEditSave(index)}> done</div>
+                  ) :
+                  (
+                    <button onClick={() => handleEdit(index)}>edit</button>
+                  )
+                }
                 <button>remove</button>
               </div>
             </div>
