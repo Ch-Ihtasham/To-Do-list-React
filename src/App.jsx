@@ -2,12 +2,16 @@ import { useState } from 'react'
 
 
 function App() {
-  const [tasks, setTasks] = useState(()=>{
-    
+  const [tasks, setTasks] = useState(() => {
+    const saveLocal = localStorage.getItem('task');
+    return saveLocal ? JSON.parse(saveLocal) : []
   }); // Array to store tasks
   const [newTask, setNewTask] = useState(''); // Store new task input
   const [isEditing, setIsEditing] = useState(null)
   const [editedText, setEditedText] = useState('')
+  useEffect(() => {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }, [tasks]);
   const handleChange = (e) => {
     setNewTask(e.target.value)
   }
