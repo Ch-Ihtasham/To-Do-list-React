@@ -2,7 +2,9 @@ import { useState } from 'react'
 
 
 function App() {
-  const [tasks, setTasks] = useState([]); // Array to store tasks
+  const [tasks, setTasks] = useState(()=>{
+    
+  }); // Array to store tasks
   const [newTask, setNewTask] = useState(''); // Store new task input
   const [isEditing, setIsEditing] = useState(null)
   const [editedText, setEditedText] = useState('')
@@ -34,6 +36,10 @@ function App() {
     setTasks(updatedEditTask)
     setIsEditing(null);
   }
+  function handelremove(index) {
+    const filtertask = tasks.filter((v, i) => i !== index)
+    setTasks(filtertask)
+  }
 
   return (
     <div className='w-3/4 m-auto my-3'>
@@ -62,13 +68,13 @@ function App() {
               <div className='flex gap-4'>
                 {isEditing === index ?
                   (
-                    <div onClick={() => handelEditSave(index)}> done</div>
+                    <button onClick={() => handelEditSave(index)}> done</button>
                   ) :
                   (
                     <button onClick={() => handleEdit(index)}>edit</button>
                   )
                 }
-                <button>remove</button>
+                <button onClick={() => handelremove(index)}>remove</button>
               </div>
             </div>
           </div>
