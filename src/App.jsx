@@ -1,4 +1,4 @@
-import { useState,useEffect } from 'react'
+import { useState, useEffect } from 'react'
 
 
 function App() {
@@ -46,16 +46,17 @@ function App() {
   }
 
   return (
-    <div className='w-3/4 m-auto my-3'>
-      <div>
-        <input type="text" onChange={handleChange} value={newTask} className='border-2 border-black' />
-        <button onClick={handleAdd} className='' >Add</button>
+    <div className='w-3/4 m-auto  bg-slate-400 py-5'>
+      <div className='text-center'>
+        <h1 className='text-4xl font-bold py-6'>QuilCoders To-Do-List</h1>
+        <input type="text" onChange={handleChange} value={newTask} className='border-2 border-yellow-600 pl-2 h-10 w-72 rounded-xl ' />
+        <button onClick={handleAdd} className='bg-yellow-600 text-white px-6 py-2 rounded-xl ml-4' >Add</button>
       </div>
       <div>
-        <h2 className='text-3xl font-bold'>your task</h2>
+        <h2 className='text-3xl font-bold  text-center'>Task To Do</h2>
         {tasks.map((task, index) => (
           <div key={index}>
-            <div className='flex justify-evenly w-80'>
+            <div className='flex justify-center items-center gap-10 my-2'>
               <input type="checkbox"
                 checked={task.isDone}
                 onChange={() => handelDone(index)}
@@ -67,18 +68,18 @@ function App() {
                     <input type="text" onChange={(e) => setEditedText(e.target.value)} value={editedText} className='border-2 border-black' />
                   </div>
                 ) :
-                (<div className={task.isDone ? 'line-through' : ''} >{task.text}</div>)}
+                (<div className={ ` w-72 ${task.isDone ? 'line-through' : ''}`} >{task.text}</div>)}
 
               <div className='flex gap-4'>
                 {isEditing === index ?
                   (
-                    <button onClick={() => handelEditSave(index)}> done</button>
+                    <button className='bg-yellow-600 text-white px-2 py-1 rounded-xl ml-4' onClick={() => handelEditSave(index)}> Done</button>
                   ) :
                   (
-                    <button onClick={() => handleEdit(index)}>edit</button>
+                    <button className='bg-yellow-600 text-white px-2 py-1 rounded-xl ml-4' onClick={() => handleEdit(index)}>Edit</button>
                   )
                 }
-                <button onClick={() => handelremove(index)}>remove</button>
+                <button className='bg-yellow-600 text-white px-2 py-1 rounded-xl ml-4' onClick={() => handelremove(index)}>Remove</button>
               </div>
             </div>
           </div>
